@@ -10,19 +10,49 @@ namespace BibliotekaKlas
     /// </summary>
     public class UI
     {
-        /// <summary>Implementacja poprzedniego sposobu działania serwera. Do usunięcia. </summary>
-        public string Answer(string msg)
+        string instance = "menu";
+
+        public string ServerMsg(string clientmsg)
         {
-            Console.Write(msg + "\t");
-            TriangleType type = new TriangleType(msg);
-            return type.getType();
+            if (instance == "menu")
+                return GetMenu();
+            else if (instance == "choice")
+                return Choice(clientmsg);
+            else
+                return "Blad";
         }
 
         public string GetMenu()
         {
-            return "Ktora z ponizszych czynnosci chcesz wykonac?\n" +
-                "1 - logowanie\n" +
-                "2 - rejestracja\n";
+            instance = "choice";
+            return "Ktora z ponizszych czynnosci chcesz wykonac?\r\n" +
+                "1 - logowanie\r\n" +
+                "2 - rejestracja\r\n";
+        }
+
+        public string Choice(string msg)
+        {
+            int choice;
+            if (Int32.TryParse(msg, out choice))
+            {
+            switch(choice)
+                {
+                    case 1:
+                        instance = "login";
+                        return "Podaj login i haslo: ";
+                    case 2:
+                        instance = "register";
+                        return "Podaj login i haslo: ";
+                    default:
+                        instance = "menu";
+                        return "Podano zla wartosc. ";
+                }
+            }
+            else
+            {
+                instance = "menu";
+                return "Podano zla wartosc";
+            }
         }
     }
 }

@@ -44,20 +44,18 @@ namespace BibliotekaKlas
         {
             byte[] buffer = new byte[Buffer_size];
             UI ui = new UI();
+            string clientmsg = null;
             while (true)
             {
                 try
                 {
-                    byte[] menu = System.Text.Encoding.ASCII.GetBytes(ui.GetMenu());
-                    stream.Write(menu, 0, menu.Length);
-
+                    byte[] servermsg = System.Text.Encoding.ASCII.GetBytes(ui.ServerMsg(clientmsg));
+                    stream.Write(servermsg, 0, servermsg.Length);
                     int msg_len = stream.Read(buffer, 0, 1024);
-                    string msg = System.Text.Encoding.UTF8.GetString(buffer);
-                    string ans = ui.Answer(msg);
-                    byte[] answer = System.Text.Encoding.ASCII.GetBytes(ans);
-                    stream.Write(answer, 0, answer.Length);
+                    clientmsg = System.Text.Encoding.UTF8.GetString(buffer);
+
                     msg_len = stream.Read(buffer, 0, 1024);
-                    Array.Clear(buffer, 0, buffer.Length);
+                    //Array.Clear(buffer, 0, buffer.Length);
                 }
                 catch (IOException e)
                 {
