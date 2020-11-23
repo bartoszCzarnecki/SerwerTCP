@@ -8,7 +8,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SerwerTCP", "SerwerTCP\Serw
 		{571AD1A8-7E65-47E2-8B66-F0EFE55B2C69} = {571AD1A8-7E65-47E2-8B66-F0EFE55B2C69}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serwer_Klasy", "BibliotekaKlas\Serwer_Klasy.csproj", "{571AD1A8-7E65-47E2-8B66-F0EFE55B2C69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BibliotekaKlas", "BibliotekaKlas\BibliotekaKlas.csproj", "{571AD1A8-7E65-47E2-8B66-F0EFE55B2C69}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{88E804CC-1473-4C82-82A5-2BD5260EFC62}"
 	ProjectSection(SolutionItems) = preProject
