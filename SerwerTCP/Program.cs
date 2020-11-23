@@ -2,7 +2,7 @@
 using System.Net;
 using BibliotekaKlas;
 
-namespace asynchroniczny
+namespace SerwerTCP
 {
     /// <summary>
     /// Program realizuje asynchroniczny serwer TCP.

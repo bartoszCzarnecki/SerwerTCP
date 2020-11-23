@@ -49,10 +49,7 @@ namespace BibliotekaKlas
                 {
                     int msg_len = stream.Read(buffer, 0, 1024);
                     string msg = System.Text.Encoding.UTF8.GetString(buffer);
-                    Console.Write(msg + "\t");
-                    TriangleType type = new TriangleType(msg);
-                    byte[] answer = System.Text.Encoding.ASCII.GetBytes(type.getType());
-                    Console.Write(type.getType());
+                    byte[] answer = new UI().temp(msg);
                     stream.Write(answer, 0, answer.Length);
                     msg_len = stream.Read(buffer, 0, 1024);
                     Array.Clear(buffer, 0, buffer.Length);
