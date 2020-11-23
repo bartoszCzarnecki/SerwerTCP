@@ -1,15 +1,13 @@
-# Serwer Rejesteracji U¿ytkowników
+# Serwer Rejesteracji UÅ¼ytkownikÃ³w
 
 ## Wymagania Fukcjonalne
 
-1. Administrator uruchamia aplikacjê serwera.
-2. Serwer rozpoczyna dzia³anie od razu po uruchomieniu aplikacji.
-3. Administrator koñczy dzia³anie aplikacji serwera.
-4. Klient ³¹czy siê z aplikacj¹ serwera.
-5. Klient przesy³a wiadomoœæ do serwera, serwer odpowiada klientowi dok³adnie tak¹ sam¹
-wiadomoœci¹.
-6. Klient koñczy po³¹czenie z aplikacj¹ serwera.
-7. Mo¿liwoœæ rejestracji nowych u¿ytkowników - klient podaje login i has³o.
-8. Mo¿liwoœæ sprawdzenia danych logowania - klient podaje login i has³o.
-9. Czytanie u¿ytkowników z pliku tekstowego.
-10. Zapisywanie u¿ytkowników do pliku tekstowego.
+1. Administrator uruchamia aplikacjÄ™ serwera.
+2. Serwer rozpoczyna dziaÅ‚anie od razu po uruchomieniu aplikacji.
+3. Administrator koÅ„czy dziaÅ‚anie aplikacji serwera.
+4. Klient Å‚Ä…czy siÄ™ z aplikacjÄ… serwera.
+5. Klient koÅ„czy poÅ‚Ä…czenie z aplikacjÄ… serwera.
+6. MoÅ¼liwoÅ›Ä‡ rejestracji nowych uÅ¼ytkownikÃ³w - klient podaje login i hasÅ‚o.
+7. MoÅ¼liwoÅ›Ä‡ sprawdzenia danych logowania - klient podaje login i hasÅ‚o.
+8. Czytanie uÅ¼ytkownikÃ³w z pliku tekstowego.
+9. Zapisywanie uÅ¼ytkownikÃ³w do pliku tekstowego.
