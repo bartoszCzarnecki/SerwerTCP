@@ -43,13 +43,18 @@ namespace BibliotekaKlas
         protected override void BeginDataTransmission(NetworkStream stream)
         {
             byte[] buffer = new byte[Buffer_size];
+            UI ui = new UI();
             while (true)
             {
                 try
                 {
+                    byte[] menu = System.Text.Encoding.ASCII.GetBytes(ui.GetMenu());
+                    stream.Write(menu, 0, menu.Length);
+
                     int msg_len = stream.Read(buffer, 0, 1024);
                     string msg = System.Text.Encoding.UTF8.GetString(buffer);
-                    byte[] answer = new UI().temp(msg);
+                    string ans = ui.Answer(msg);
+                    byte[] answer = System.Text.Encoding.ASCII.GetBytes(ans);
                     stream.Write(answer, 0, answer.Length);
                     msg_len = stream.Read(buffer, 0, 1024);
                     Array.Clear(buffer, 0, buffer.Length);
