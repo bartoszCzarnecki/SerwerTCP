@@ -14,9 +14,8 @@ namespace SerwerTCP
     {
         public static void Main()
         {
-            //ServerEchoAPM server = new ServerEchoAPM(IPAddress.Parse("127.0.0.1"), 8000);
-            //server.Start();
-
+            ServerEchoAPM server = new ServerEchoAPM(IPAddress.Parse("127.0.0.1"), 8000);
+            server.Start();
         }
     }
 }
