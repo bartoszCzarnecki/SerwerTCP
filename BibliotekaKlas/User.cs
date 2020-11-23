@@ -18,5 +18,7 @@ namespace BibliotekaKlas
         public string Login { get; set; }
 
         public string Password { get; set; }
+
+        public string MapToString() => "login:" + Login + "," + "password:" + Password;
     }
 }
