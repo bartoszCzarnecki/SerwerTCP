@@ -23,9 +23,17 @@ namespace BibliotekaKlas
             return users;
         }
 
-        public static void AddUser(User user, string filePath)
+        public static bool AddUser(User user, string filePath)
         {
             List<User> users = GetUsers(filePath);
+
+            bool userAlreadyExists = users.Exists(u => u.Login == user.Login);
+
+            if (userAlreadyExists)
+            {
+                return false;
+            }
+
             users.Add(user);
 
             List<string> usersStringList = new List<string>();
@@ -36,6 +44,8 @@ namespace BibliotekaKlas
             }
 
             File.WriteAllLines(filePath, usersStringList);
+
+            return true;
         }
     }
 }
