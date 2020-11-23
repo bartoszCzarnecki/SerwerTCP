@@ -25,10 +25,10 @@ namespace BibliotekaKlas
 
         public static void AddUser(User user, string filePath)
         {
-            List<User> users = UserStorage.GetUsers(filePath);
+            List<User> users = GetUsers(filePath);
             users.Add(user);
 
-            List<String> usersStringList = new List<string>();
+            List<string> usersStringList = new List<string>();
 
             foreach (User u in users)
             {
