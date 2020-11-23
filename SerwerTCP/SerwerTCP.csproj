@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BibliotekaKlas\BibliotekaKlas.csproj" />
+    <ProjectReference Include="..\BibliotekaKlas\SerwerKlasy.csproj" />
   </ItemGroup>
 
 </Project>
