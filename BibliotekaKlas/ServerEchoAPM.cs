@@ -50,9 +50,9 @@ namespace BibliotekaKlas
                 try
                 {
                     byte[] servermsg = System.Text.Encoding.ASCII.GetBytes(ui.ServerMsg(clientmsg));
-                    stream.Write(servermsg, 0, servermsg.Length);
+                    stream.Write(servermsg, 0, servermsg.Length);               // Wysyłanie tekstu z servermsg do klienta
                     int msg_len = stream.Read(buffer, 0, 1024);
-                    clientmsg = System.Text.Encoding.UTF8.GetString(buffer);
+                    clientmsg = System.Text.Encoding.UTF8.GetString(buffer);    // Odbieranie odpowiedzi klienta
 
                     msg_len = stream.Read(buffer, 0, 1024);
                     //Array.Clear(buffer, 0, buffer.Length);
