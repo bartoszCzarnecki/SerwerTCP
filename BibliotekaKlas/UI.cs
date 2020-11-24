@@ -57,7 +57,8 @@ namespace BibliotekaKlas
             return "Ktora z ponizszych czynnosci chcesz wykonac?\r\n" +
                 "1 - zmiana hasla\r\n" +
                 "2 - sprawdzenie rodzaju trojkata o bokach podanej dlugosci\r\n" +
-                "3 - wylogowanie\r\n";
+                "3 - usuniecie konta\r\n" +
+                "4 - wylogowanie\r\n";
         }
 
         // Przetworzenie wyboru z GetStartMenu()
@@ -100,6 +101,10 @@ namespace BibliotekaKlas
                         status = "triangle";
                         return "Podaj wartosci bokow (oddzielone spacja) lub 'cancel' aby wrocic do menu:\r\n";
                     case 3:
+                        UserStorage.DeleteUser(loggeduser, filePath);
+                        loggeduser = null;
+                        return GetStartMenu();
+                    case 4:
                         loggeduser = null;
                         return GetStartMenu();
                     default:
@@ -166,7 +171,6 @@ namespace BibliotekaKlas
         {
             if (msg == "cancel")
                 return GetLoggedMenu();
-            status = "logged";
             return new TriangleType(msg).GetTriangleType();
         }
     }
