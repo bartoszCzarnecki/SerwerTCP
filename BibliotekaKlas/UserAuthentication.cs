@@ -6,25 +6,28 @@ namespace BibliotekaKlas
 {
     class UserAuthentication
     {
-        public static bool MatchPassword(string userLogin, string password, string filePath)
+        public static bool MatchPassword(string userLogin, string password, string filePath, out User user)
         {
             List<User> users = UserStorage.GetUsers(filePath);
 
-            foreach (User user in users)
+            foreach (User us in users)
             {
-                if (user.Login == userLogin)
+                if (us.Login == userLogin)
                 {
-                    if (user.Password == password)
+                    if (us.Password == password)
                     {
+                        user = us;
                         return true;
 
                     } else
                     {
+                        user = null;
                         return false;
                     }
                 }
             }
 
+            user = null;
             return false;
         }
     }

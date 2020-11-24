@@ -47,5 +47,21 @@ namespace BibliotekaKlas
 
             return true;
         }
+
+        public static void ChangeUserPass(User user, string password, string filePath)
+        {
+            List<User> users = GetUsers(filePath);
+            List<string> usersStringList = new List<string>();
+
+            foreach (User u in users)
+            {
+                if (u.Login == user.Login)
+                    u.Password = password;
+                usersStringList.Add(u.MapToString());
+            }
+
+            File.WriteAllLines(filePath, usersStringList);
+        }
+
     }
 }

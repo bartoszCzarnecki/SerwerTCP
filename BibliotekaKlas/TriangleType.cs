@@ -38,23 +38,23 @@ namespace BibliotekaKlas
                 return;
             }
             if (a * a + b * b == c * c || a * a + c * c == b * b || c * c + b * b == a * a)
-                type = "Trojkat prostokatny\n";
+                type = "Trojkat prostokatny\r\n";
             else if ((a * a + b * b < c * c && c > a && c > b) || (a * a + c * c < b * b && b > a && b > c) || (c * c + b * b < a * a && a > b && a > c))
-                type = "Trojkat rozwartokatny\n";
+                type = "Trojkat rozwartokatny\r\n";
             else
-                type = "Trojkat ostrokatny\n";
+                type = "Trojkat ostrokatny\r\n";
         }
 
         /// <summary>
         /// Zwraca typ trojkata w zmiennej typu string.
         /// </summary>
         /// <returns></returns>
-        public string getType()
+        public string GetTriangleType()
         {
             if (is_match)
                 return type;
             else
-                return "Podano bledne dane wejsciowe\n";
+                return "Podano bledne dane wejsciowe\r\n";
         }
 
         static void Main(string[] args)
