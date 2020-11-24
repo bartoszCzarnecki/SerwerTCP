@@ -164,6 +164,8 @@ namespace BibliotekaKlas
         }
         private string Triangle(string msg)
         {
+            if (msg == "cancel")
+                return GetLoggedMenu();
             status = "logged";
             return new TriangleType(msg).GetTriangleType();
         }
