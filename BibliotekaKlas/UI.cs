@@ -108,7 +108,6 @@ namespace BibliotekaKlas
                         loggeduser = null;
                         return GetStartMenu();
                     default:
-                        status = "menu";
                         return "Podano zla wartosc\r\n";
                 }
             }
