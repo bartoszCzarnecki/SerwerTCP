@@ -6,7 +6,7 @@ namespace BibliotekaKlas
     public class TriangleType
     {
         private GroupCollection groups;
-        private string type;
+        public string type;
         public bool is_match;
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace BibliotekaKlas
         /// <summary>
         /// Sprawdza, czy z podanych liczb mozna stworzyc trojkat i czy jest to trojkat ostrokatny, rozwartokatny czy prostokatny.
         /// </summary>
-        private void checkType()
+        public void checkType()
         {
             int a = Int32.Parse(groups[1].Value);
             int b = Int32.Parse(groups[2].Value);
