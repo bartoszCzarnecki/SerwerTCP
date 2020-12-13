@@ -28,7 +28,7 @@ namespace Database
             server = "localhost";
             database = "usersdb";
             user = "root";
-            password = "SqLexample123";
+            password = "YOUR_PASSWORD";
             string value = $"SERVER={server};DATABASE={database};UID={user};PASSWORD={password}";
 
             connection = new MySqlConnection(value);
