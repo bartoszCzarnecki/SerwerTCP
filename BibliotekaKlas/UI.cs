@@ -24,7 +24,9 @@ namespace BibliotekaKlas
         /// <returns></returns>
         public string ServerMsg(string clientmsg)
         {
-            if (status == "menu")
+            if (clientmsg == "get_status")
+                return status;
+            else if (status == "menu")
                 return GetStartMenu();
             else if (status == "choice")
                 return Choice(clientmsg);
@@ -46,19 +48,13 @@ namespace BibliotekaKlas
         private string GetStartMenu()
         {
             status = "choice";
-            return "Ktora z ponizszych czynnosci chcesz wykonac?\r\n" +
-                "1 - logowanie\r\n" +
-                "2 - rejestracja\r\n";
+            return "ok";
         }
 
         private string GetLoggedMenu()
         {
             status = "logged";
-            return "Ktora z ponizszych czynnosci chcesz wykonac?\r\n" +
-                "1 - zmiana hasla\r\n" +
-                "2 - sprawdzenie rodzaju trojkata o bokach podanej dlugosci\r\n" +
-                "3 - usuniecie konta\r\n" +
-                "4 - wylogowanie\r\n";
+            return "ok";
         }
 
         // Przetworzenie wyboru z GetStartMenu()
@@ -71,19 +67,19 @@ namespace BibliotekaKlas
                 {
                     case 1:
                         status = "login";
-                        return "Podaj login i haslo (oddzielone spacja) lub 'cancel' aby wrocic do menu:\r\n";
+                        return "ok";
                     case 2:
                         status = "register";
-                        return "Podaj login i haslo (oddzielone spacja) lub 'cancel' aby wrocic do menu:\r\n";
+                        return "ok";
                     default:
                         status = "menu";
-                        return "Podano zla wartosc\r\n";
+                        return "value_error";
                 }
             }
             else
             {
                 status = "choice";
-                return "Podano zla wartosc\r\n";
+                return "value_error";
             }
         }
 
@@ -94,27 +90,26 @@ namespace BibliotekaKlas
             {
                 switch (choice)
                 {
-                    case 1:
+                    case 1:     // zmiana hasla
                         status = "changepassword";
-                        return "Podaj swoje stare haslo oraz nowe haslo (oddzielone spacja) lub 'cancel' aby wrocic do menu:\r\n";
-                    case 2:
+                        return "ok";
+                    case 2:     // liczenie bokow trojkata
                         status = "triangle";
-                        return "Podaj wartosci bokow (oddzielone spacja) lub 'cancel' aby wrocic do menu:\r\n";
-                    case 3:
+                        return "ok";
+                    case 3:     // usuwanie konta
                         UserStorage.DeleteUser(loggeduser, filePath);
                         loggeduser = null;
                         return GetStartMenu();
-                    case 4:
+                    case 4:     // wylogowanie
                         loggeduser = null;
                         return GetStartMenu();
                     default:
-                        return "Podano zla wartosc\r\n";
+                        return "value_error";
                 }
             }
             else
             {
-                status = "choice";
-                return "Podano zla wartosc\r\n";
+                return "value_error";
             }
         }
 
@@ -124,14 +119,14 @@ namespace BibliotekaKlas
                 return GetStartMenu();
             string[] credentials = msg.Split(' ');
             if (credentials.Length != 2)
-                return "Podano zla forme, nalezy wpisac dwa slowa oddzielone spacja (login i haslo)\r\n";
+                return "arg_count_error";
             if (UserAuthentication.MatchPassword(credentials[0], credentials[1], filePath, out loggeduser))
             {
                 status = "logged";
                 return GetLoggedMenu();
             }
             else
-                return "Podano zly login lub haslo\r\n";
+                return "value_error";
         }
 
         private string Register(string msg)
@@ -140,7 +135,7 @@ namespace BibliotekaKlas
                 return GetStartMenu();
             string[] credentials = msg.Split(' ');
             if (credentials.Length != 2)
-                return "Podano zla forme, nalezy wpisac dwa slowa oddzielone spacja (login i haslo)\r\n";
+                return "arg_count_error";
             if (UserStorage.AddUser(new User(credentials[0], credentials[1]), filePath))
             {
                 loggeduser = new User(credentials[0], credentials[1]);
@@ -156,7 +151,7 @@ namespace BibliotekaKlas
                 return GetLoggedMenu();
             string[] passwords = msg.Split(' ');
             if (passwords.Length != 2)
-                return "Podano zla forme, nalezy wpisac dwa slowa oddzielone spacja (stare i nowe haslo)\r\n";
+                return "arg_count_error";
             if (UserAuthentication.MatchPassword(loggeduser.Login, passwords[0], filePath, out loggeduser))
             {
                 UserStorage.ChangeUserPass(loggeduser, passwords[1], filePath);
@@ -164,7 +159,7 @@ namespace BibliotekaKlas
                 return GetLoggedMenu();
             }
             else
-                return "Podano zly login lub haslo\r\n";
+                return "value_error";
         }
         private string Triangle(string msg)
         {
