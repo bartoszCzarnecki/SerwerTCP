@@ -13,8 +13,9 @@ namespace BibliotekaKlas
     public class UI
     {
         private string status = "menu";
-        private readonly string filePath = "../../../../users.txt";
-        private User loggeduser = null;
+        private User currentUser = null;
+        private UserOperations userOperations = new UserOperations();
+        private UserAuthentication userAuth = new UserAuthentication();
 
         /// <summary>
         /// Ustalanie wiadomości, jaka powinna w danym momencie trafić do klienta. 
@@ -97,11 +98,11 @@ namespace BibliotekaKlas
                         status = "triangle";
                         return "ok";
                     case 3:     // usuwanie konta
-                        UserStorage.DeleteUser(loggeduser, filePath);
-                        loggeduser = null;
+                        userOperations.Remove(currentUser.Id);
+                        currentUser = null;
                         return GetStartMenu();
                     case 4:     // wylogowanie
-                        loggeduser = null;
+                        currentUser = null;
                         return GetStartMenu();
                     default:
                         return "value_error";
@@ -120,8 +121,9 @@ namespace BibliotekaKlas
             string[] credentials = msg.Split(' ');
             if (credentials.Length != 2)
                 return "arg_count_error";
-            if (UserAuthentication.MatchPassword(credentials[0], credentials[1], filePath, out loggeduser))
+            if (userAuth.MatchPassword(credentials[0], credentials[1]))
             {
+                currentUser = userOperations.Get(credentials[0], credentials[1]);
                 status = "logged";
                 return GetLoggedMenu();
             }
@@ -136,9 +138,10 @@ namespace BibliotekaKlas
             string[] credentials = msg.Split(' ');
             if (credentials.Length != 2)
                 return "arg_count_error";
-            if (UserStorage.AddUser(new User(credentials[0], credentials[1]), filePath))
+            if (userAuth.CheckAvailableLogin(credentials[0]))
             {
-                loggeduser = new User(credentials[0], credentials[1]);
+                userOperations.Add(credentials[0], credentials[1]);
+                currentUser = userOperations.Get(credentials[0], credentials[1]);
                 return GetLoggedMenu();
             }
             else
@@ -152,9 +155,10 @@ namespace BibliotekaKlas
             string[] passwords = msg.Split(' ');
             if (passwords.Length != 2)
                 return "arg_count_error";
-            if (UserAuthentication.MatchPassword(loggeduser.Login, passwords[0], filePath, out loggeduser))
+            if (userAuth.MatchPassword(currentUser.Login, passwords[0]))
             {
-                UserStorage.ChangeUserPass(loggeduser, passwords[1], filePath);
+                userOperations.ChangePassword(currentUser.Id, passwords[1]);
+                currentUser.Password = passwords[1];
                 status = "logged";
                 return GetLoggedMenu();
             }

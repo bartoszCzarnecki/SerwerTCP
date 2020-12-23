@@ -1,34 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MySql.Data.MySqlClient;
 
 namespace BibliotekaKlas
 {
     class UserAuthentication
     {
-        public static bool MatchPassword(string userLogin, string password, string filePath, out User user)
+        private readonly Database db;
+
+        public UserAuthentication()
         {
-            List<User> users = UserStorage.GetUsers(filePath);
+            db = new Database();
+        }
 
-            foreach (User us in users)
+        public bool CheckAvailableLogin(string login)
+        {
+            string query = $"SELECT Count(*) FROM users WHERE login = '{login}';";
+            int value = 0;
+            if (db.OpenConnection())
             {
-                if (us.Login == userLogin)
-                {
-                    if (us.Password == password)
-                    {
-                        user = us;
-                        return true;
-
-                    } else
-                    {
-                        user = null;
-                        return false;
-                    }
-                }
+                MySqlCommand cmd = new MySqlCommand(query, db.connection);
+                value = int.Parse(cmd.ExecuteScalar() + "");
+                db.CloseConnection();
             }
+            return value == 0;
+        }
 
-            user = null;
-            return false;
+        public bool MatchPassword(string login, string password)
+        {
+            string query = $"SELECT Count(*) FROM users WHERE login = '{login}' AND password = '{password}';";
+            int value = 0;
+            if (db.OpenConnection())
+            {
+                MySqlCommand cmd = new MySqlCommand(query, db.connection);
+                value = int.Parse(cmd.ExecuteScalar() + "");
+                db.CloseConnection();
+            }
+            return value > 0;
         }
     }
 }

@@ -57,7 +57,7 @@ namespace BibliotekaKlas
                 }
                 catch (IOException e)
                 {
-                    break;
+                    return;
                 }
             }
         }
