@@ -14,8 +14,8 @@ namespace BibliotekaKlas
     {
         private string status = "menu";
         private User currentUser = null;
-        private UserOperations userOperations = new UserOperations();
-        private UserAuthentication userAuth = new UserAuthentication();
+        private readonly UserOperations userOperations = new UserOperations();
+        private readonly UserAuthentication userAuth = new UserAuthentication();
 
         /// <summary>
         /// Ustalanie wiadomości, jaka powinna w danym momencie trafić do klienta. 
@@ -123,7 +123,7 @@ namespace BibliotekaKlas
                 return "arg_count_error";
             if (userAuth.MatchPassword(credentials[0], credentials[1]))
             {
-                currentUser = userOperations.Get(credentials[0], credentials[1]);
+                currentUser = userOperations.Get(login: credentials[0]);
                 status = "logged";
                 return GetLoggedMenu();
             }
@@ -141,7 +141,7 @@ namespace BibliotekaKlas
             if (userAuth.CheckAvailableLogin(credentials[0]))
             {
                 userOperations.Add(credentials[0], credentials[1]);
-                currentUser = userOperations.Get(credentials[0], credentials[1]);
+                currentUser = userOperations.Get(login: credentials[0]);
                 return GetLoggedMenu();
             }
             else
@@ -158,7 +158,7 @@ namespace BibliotekaKlas
             if (userAuth.MatchPassword(currentUser.Login, passwords[0]))
             {
                 userOperations.ChangePassword(currentUser.Id, passwords[1]);
-                currentUser.Password = passwords[1];
+                currentUser = userOperations.Get(id: currentUser.Id);
                 status = "logged";
                 return GetLoggedMenu();
             }

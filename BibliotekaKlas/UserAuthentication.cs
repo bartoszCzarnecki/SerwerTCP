@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Data;
+using System.Security.Cryptography;
 using MySql.Data.MySqlClient;
 
 namespace BibliotekaKlas
@@ -29,15 +29,46 @@ namespace BibliotekaKlas
 
         public bool MatchPassword(string login, string password)
         {
-            string query = $"SELECT Count(*) FROM users WHERE login = '{login}' AND password = '{password}';";
-            int value = 0;
+            string query = $"SELECT password FROM users WHERE login = '{login}'", hashPassword;
             if (db.OpenConnection())
             {
                 MySqlCommand cmd = new MySqlCommand(query, db.connection);
-                value = int.Parse(cmd.ExecuteScalar() + "");
-                db.CloseConnection();
+                MySqlDataReader r = cmd.ExecuteReader(CommandBehavior.SingleRow);
+
+                if (r.Read())
+                {
+                    hashPassword = r["password"].ToString();
+                    r.Close();
+                    db.CloseConnection();
+                    return VerifyPassword(hashPassword, password);
+                }
             }
-            return value > 0;
+            return false;
         }
+        public static string HashPassword(string password)
+        {
+            byte[] salt, hash, hashBytes = new byte[36];
+            new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
+
+            hash = new Rfc2898DeriveBytes(password, salt, 100000).GetBytes(20);
+
+            Array.Copy(salt, 0, hashBytes, 0, 16);
+            Array.Copy(hash, 0, hashBytes, 16, 20);
+
+            return Convert.ToBase64String(hashBytes);
+        }
+        public static bool VerifyPassword(string hashPassword, string password)
+        {
+            byte[] salt = new byte[16], hash, hashBytes = Convert.FromBase64String(hashPassword);
+
+            Array.Copy(hashBytes, 0, salt, 0, 16);
+            hash = new Rfc2898DeriveBytes(password, salt, 100000).GetBytes(20);
+
+            for (int i = 0; i < 20; i++)
+                if (hashBytes[i + 16] != hash[i]) return false;
+
+            return true;
+        }
+
     }
 }
